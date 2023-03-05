@@ -20,7 +20,7 @@ exports.registerUserSchema=[
     .withMessage("password is mandatory")
     .isLength({min:5})
     .withMessage("length of password  should be 5"),
-    check('City')
+    check('city')
     .not()
     .isEmpty()
     .withMessage("city is mandatory")

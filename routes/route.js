@@ -10,6 +10,7 @@ router.get("/test",function test(req, res){
 
 const userController = require("../Controllers/userController")
 const{registerUserSchema, loginUserSchema}= require("../Middleware/userMiddleware")
+const{Authentication}=require("../Auth/Auth")
 
 
 router.post("/registration",registerUserSchema,userController.userRegistration.bind())
