@@ -28,27 +28,37 @@ class userModel {
         return result;
 
 	}
-	// checkPassword = async (email)=>{
-	// 	let sql = `SELECT password FROM  user_Registration WHERE email = '${email}'`;
-	// 	const [result, fields] = await promisePool.query(sql);
-	// 	return result;
-
-	// }
+	
 	chatRegister= async (data)=>{
 		let sql =`INSERT INTO chat (sender,Receiver,content) values ('${data.sender}','${data.Receiver}','${data.content}')`
 		const[result,fields] = await promisePool.query(sql);
 		return result;
 	}
-	getAllDetails= async()=>{
-		let sql = `SELECT chat.sender, chat.Receiver, chat.content,u.name AS Recipient,user_Registration.name AS senderName, chat.Created_At  
+	
+
+	getAllDetails = async () => {
+		let sql = `SELECT chat.id,chat.sender, chat.Receiver, chat.content,u.name AS Recipient,user_Registration.name AS senderName, DATE_FORMAT(chat.Created_At, '%d/%m/%y %H:%i:%s') AS At  
 		FROM chat 
 		JOIN user_Registration ON chat.sender = user_Registration.id 
-		 left JOIN user_Registration AS u ON chat.Receiver = u.id`
-		const[result,fields] = await promisePool.query(sql);
+		LEFT JOIN user_Registration AS u ON chat.Receiver = u.id`;
+		const [result, fields] = await promisePool.query(sql);
 		return result;
-	}
+	  }
+	  
+
 	checkUserById= async (id)=>{
 		let sql = `select * from user_Registration where id ='${id}'`;
+		const[ result,fields]= await promisePool.query(sql);
+		return result
+	}
+	findById = async(userId)=>{
+		let sql = `select * from user_Registration where id ='${userId}'`;
+		const[ result,fields]= await promisePool.query(sql);
+		return result
+	}
+
+	getDetails= async()=>{
+		let sql = `select user_Registration.id , user_Registration.name from user_Registration` ;
 		const[ result,fields]= await promisePool.query(sql);
 		return result
 	}

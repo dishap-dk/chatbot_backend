@@ -1,6 +1,7 @@
 const userModel = require("../Models/userModel");
 const {validationResult} = require('express-validator')
-const JWT =   require("jsonwebtoken")
+const JWT =   require("jsonwebtoken");
+const e = require("express");
 // const {  } = require("express-validator");
 const userRegistration = async (req, res) => {
   try {
@@ -8,18 +9,18 @@ const userRegistration = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(200).send({
         status: false,
-        msg: `${errors.errors[0].msg}`,
+        data: `${errors.errors[0].msg}`,
       });
     }
     let data = req.body;
     // console.log(data);
     let registration = await userModel.registration(data);
     if (registration) {
-      return res.status(201).send({ status: true, msg: "successs" });
+      return res.status(201).send({ status: true, data: "Successs" });
     } else {
       return res
         .status(400)
-        .send({ status: true, msg: "something went wrong" });
+        .send({ status: true, data: "Something Went Wrong" });
     }
   } catch (err) {
     return res.status(500).send({ status: false, error: err.message });
@@ -32,7 +33,7 @@ const userLogin = async function (req, res) {
     if (!errors.isEmpty()) {
       return res.status(200).send({
         status: false,
-        msg: `${errors.errors[0].msg}`,
+        data: `${errors.errors[0].msg}`,
       });
     }
    let email = req.body.email;
@@ -45,11 +46,15 @@ const userLogin = async function (req, res) {
       },"jwtSecretKey")
       res.setHeader("x-api-key", Token)
       
-      return (res.status(200).send({status: true,msg:"success" }))
+      return (res.status(200).send({
+        status: true,
+        data:"Success" ,
+        token:Token ,
+      user:checkEmail}))
       } else {
       return res.status(404).send({
         status: false,
-        msg: "invalid emailId and password ",
+        data: "invalid emailId and password ",
       });
     }
   } catch (err) {
@@ -66,9 +71,9 @@ let checkUserById =await userModel.checkUserById(id)
 if(checkUserById.length>0){
 let chatRegister = await userModel.chatRegister(data)
 if(chatRegister){
-  return res.status(201).send({status:true, msg:"successfully"})
+  return res.status(201).send({status:true, data:"Successfully"})
 }else{
-  return res.status(400).send({status:false , msg:" something went wrong"})
+  return res.status(400).send({status:false , data:" Something Went Wrong"})
 }
 }else{ return res.status(404).send({status:false , msg :"no data found by this id"})}
  }catch(err){
@@ -76,21 +81,42 @@ if(chatRegister){
   }
  }
 
-
- 
  const getAllDetails = async function(req, res){
   try{
 const getAllDetails = await userModel.getAllDetails()
 if(getAllDetails){
-   return res.status(200).send({status:true, msg:getAllDetails  })
-}else{ return res.status (400).send({status: false , msg:"something went wrong" })}
+   return res.status(200).send({status:true, data:getAllDetails  })
+}else{ return res.status (400).send({status: false , data:"Something Went Wrong" })}
 
   }catch(err){
      return res.status(500).send({status:false , error :err.message})
   }
  }
 
+ 
+  const getUser = async function (req, res){
+    try{
+      const getAllDetails = await userModel.getDetails()
+
+      if(getAllDetails){
+        return res.status(200).send({status:true, msg:"Successfull" , data:getAllDetails})
+      }else{
+        return res.status(400).send({status:false , msg :"Something went Wrong "})
+      }
+    }catch(err){
+      return res.status(500).send({status:false , error:err.message})
+    }
+  }
+
+
+
+
+
+
+
+
 module.exports.userRegistration = userRegistration;
 module.exports.userLogin = userLogin;
 module.exports.chat = chat;
 module.exports.getAllDetails = getAllDetails;
+module.exports.getUser = getUser;

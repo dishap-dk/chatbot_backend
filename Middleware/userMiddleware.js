@@ -5,13 +5,13 @@ exports.registerUserSchema=[
     check('name')
     .not()
     .isEmpty()
-    .withMessage("name is mandatory")
+    .withMessage("Name is mandatory")
     .isLength({min:5})
-    .withMessage("name should be not be less than 5 length"),
+    .withMessage("Name Should Be Not Be Less Than 5 Length"),
     check('email')
     .not()
     .isEmpty()
-    .withMessage("email cannot be empty")
+    .withMessage("Email Cannot Be Empty")
     .isEmail()
     .withMessage("please enter the valid email"),
     check('password')
@@ -23,20 +23,20 @@ exports.registerUserSchema=[
     check('city')
     .not()
     .isEmpty()
-    .withMessage("city is mandatory")
+    .withMessage("City Is Mandatory")
 
 ]
   exports.loginUserSchema = [
             check("email")
               .not()
               .isEmpty()
-              .withMessage("Email is required")
+              .withMessage("Email Is Required")
               .isEmail()
-              .withMessage("Email must be a valid email"),
+              .withMessage("Email Must Be A Valid Email"),
             check("password")
             .not()
             .isEmpty()
-            .withMessage("Password is required")
+            .withMessage("Password Is Required")
           ];
 
     

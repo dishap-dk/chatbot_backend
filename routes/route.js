@@ -17,4 +17,5 @@ router.post("/registration",registerUserSchema,userController.userRegistration.b
 router.post("/loginUser",loginUserSchema,userController.userLogin.bind())
 router.post('/chat',userController.chat.bind());
 router.get('/getAllDetails',userController.getAllDetails.bind())
+router.get('/getUser',userController.getUser.bind())
 module.exports.routes = router;
