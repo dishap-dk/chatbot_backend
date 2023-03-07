@@ -66,16 +66,18 @@ const userLogin = async function (req, res) {
 const chat = async function( req, res){
 try{
 let data = req.body
-let id = req.body.Receiver
+let id = req.body.receiver
+
 let checkUserById =await userModel.checkUserById(id)
+// console.log(checkUserById)
 if(checkUserById.length>0){
 let chatRegister = await userModel.chatRegister(data)
 if(chatRegister){
-  return res.status(201).send({status:true, data:"Successfully"})
+  return res.status(201).send({status:true, data:"Successfully",data:data})
 }else{
   return res.status(400).send({status:false , data:" Something Went Wrong"})
 }
-}else{ return res.status(404).send({status:false , msg :"no data found by this id"})}
+ }else{ return res.status(404).send({status:false , msg :"no data found by this id"})}
  }catch(err){
      return res.status(500).send({status: false , error:err.message})
   }
@@ -101,7 +103,7 @@ if(getAllDetails){
       if(getAllDetails){
         return res.status(200).send({status:true, msg:"Successfull" , data:getAllDetails})
       }else{
-        return res.status(400).send({status:false , msg :"Something went Wrong "})
+        return res.status(400).send({status:false , data :"Something went Wrong "})
       }
     }catch(err){
       return res.status(500).send({status:false , error:err.message})

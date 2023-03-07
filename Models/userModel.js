@@ -30,7 +30,7 @@ class userModel {
 	}
 	
 	chatRegister= async (data)=>{
-		let sql =`INSERT INTO chat (sender,Receiver,content) values ('${data.sender}','${data.Receiver}','${data.content}')`
+		let sql =`INSERT INTO chat (sender,Receiver,content) values ('${data.sender}','${data.receiver}','${data.content}')`
 		const[result,fields] = await promisePool.query(sql);
 		return result;
 	}
